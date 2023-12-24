@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace T_Dalmount.Helpers
+namespace Dalmount.Helpers
 {
     public class PasswordHasher
     {

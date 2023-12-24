@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using T_Dalmount.Context;
-using T_Dalmount.Models;
+using Dalmount.Context;
+using Dalmount.Models;
 
-namespace T_Dalmount.Controllers
+namespace Dalmount.Controllers
 {
 	[Authorize]
 	[ApiController]

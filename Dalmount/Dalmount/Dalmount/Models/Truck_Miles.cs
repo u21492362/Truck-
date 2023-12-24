@@ -1,4 +1,4 @@
-﻿namespace T_Dalmount.Models
+﻿namespace Dalmount.Models
 {
 	public class Truck_Miles
 	{

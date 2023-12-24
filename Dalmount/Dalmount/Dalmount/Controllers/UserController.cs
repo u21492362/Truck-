@@ -5,28 +5,31 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Text;
-using T_Dalmount.Context;
-using T_Dalmount.Models;
-using T_Dalmount.Helpers;
-using T_Dalmount.Models.Token;
+using Dalmount.Context;
+using Dalmount.Models;
+using Dalmount.Helpers;
+using Dalmount.Models.Token;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.EntityFrameworkCore;
-using Dalmount.Models;
 using Microsoft.AspNetCore.Authentication;
 
-namespace T_Dalmount.Controllers
+namespace Dalmount.Controllers
 {
-	[Authorize]
+	//[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class UserController : ControllerBase
-	{
+	{ 
 		private readonly AppDbContext _authContext;
-		public UserController(AppDbContext context)
+
+		public UserController(AppDbContext context )
 		{
 			_authContext = context;
+		
 		}
+
+		//**************************************************************************** Login *******************************************************************************
 
 		[HttpPost("Authenticate")]
 		public async Task<IActionResult> Authenticate([FromBody] UserVM userObj)
@@ -123,11 +126,17 @@ namespace T_Dalmount.Controllers
 			});
 		}
 
+		//**************************************************************************** Email Validation *******************************************************************************
+
 		private Task<bool> CheckEmailExistAsync(string? email)
 			=> _authContext.Users.AnyAsync(x => x.Email == email);
 
+		//**************************************************************************** Username Validation *******************************************************************************
+
 		private Task<bool> CheckUsernameExistAsync(string? username)
 			=> _authContext.Users.AnyAsync(x => x.Email == username);
+
+		//**************************************************************************** Password Validation  *******************************************************************************
 
 		private static string CheckPasswordStrength(string pass)
 		{
@@ -141,14 +150,19 @@ namespace T_Dalmount.Controllers
 			return sb.ToString();
 		}
 
-		private string CreateJwt(User user)
+		//**************************************************************************** Create JWT token *******************************************************************************
+
+		private string CreateJwt(UserVM user)
 		{
 			var jwtTokenHandler = new JwtSecurityTokenHandler();
 			var key = Encoding.ASCII.GetBytes("veryverysceret.....");
 			var identity = new ClaimsIdentity(new Claim[]
 			{
 				new Claim(ClaimTypes.Role, user.Role),
-				new Claim(ClaimTypes.Name,$"{user.Username}")
+				new Claim(ClaimTypes.Name,$"{user.Username}"),
+				new Claim(ClaimTypes.GivenName,$"{user.FirstName}"),
+				new Claim(ClaimTypes.Surname,$"{user.LastName}"),
+				new Claim(ClaimTypes.NameIdentifier, $"{user.Id}")
 			});
 
 			var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
@@ -163,6 +177,8 @@ namespace T_Dalmount.Controllers
 			return jwtTokenHandler.WriteToken(token);
 		}
 
+		//**************************************************************************** Create Refresh token *******************************************************************************
+
 		private string CreateRefreshToken()
 		{
 			var tokenBytes = RandomNumberGenerator.GetBytes(64);
@@ -176,6 +192,8 @@ namespace T_Dalmount.Controllers
 			}
 			return refreshToken;
 		}
+
+		//**************************************************************************** Token Expiration *******************************************************************************
 
 		private ClaimsPrincipal GetPrincipleFromExpiredToken(string token)
 		{
@@ -198,12 +216,16 @@ namespace T_Dalmount.Controllers
 
 		}
 
+		//**************************************************************************** Get Users *******************************************************************************
+
 		[Authorize]
 		[HttpGet]
 		public async Task<ActionResult<User>> GetAllUsers()
 		{
 			return Ok(await _authContext.Users.ToListAsync());
 		}
+
+		//**************************************************************************** Refresh *******************************************************************************
 
 		[HttpPost("refresh")]
 		public async Task<IActionResult> Refresh([FromBody] TokenApi tokenApiDto)

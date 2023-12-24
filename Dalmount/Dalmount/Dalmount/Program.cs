@@ -1,83 +1,47 @@
+using Dalmount.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System;
 using System.Text;
-using T_Dalmount.Context;
-using T_Dalmount.Models;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddCors(options => options.AddDefaultPolicy(
-	include =>
-	{
-		include.AllowAnyHeader();
-		include.AllowAnyMethod();
-		include.AllowAnyOrigin();
-	}));
-
-builder.Services.AddControllers();
-
-builder.Services.AddSwaggerGen(c =>
+builder.Services.AddCors(options =>
 {
-	c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
-	c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-	{
-		In = ParameterLocation.Header,
-		Description = "Add Bearer Token",
-		Name = "Authorization",
-		Type = SecuritySchemeType.Http,
-		BearerFormat = "JWT",
-		Scheme = "bearer"
-	});
-	c.AddSecurityRequirement(new OpenApiSecurityRequirement
-	{
-		{
-			new OpenApiSecurityScheme
-			{
-				Reference=new OpenApiReference
-				{
-					Type=ReferenceType.SecurityScheme,
-					Id = "Bearer"
-				}
-			},
-			new string[]{ }
-		}
-	});
+	options.AddPolicy("MyPolicy", builder => builder.WithOrigins("http://localhost:4200", "https://localhost:4200")
+		.AllowAnyMethod()
+		.AllowAnyHeader()
+		.AllowCredentials());
 });
 
-// Configure JWT authentication
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-	.AddJwtBearer(options =>
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<AppDbContext>(option =>
+{
+	option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+builder.Services.AddAuthentication(x =>
+{
+	x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+	x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+	x.RequireHttpsMetadata = false;
+	x.SaveToken = true;
+	x.TokenValidationParameters = new TokenValidationParameters
 	{
-		options.RequireHttpsMetadata = false;
-		options.SaveToken = true;
-		options.TokenValidationParameters = new TokenValidationParameters
-		{
-			ValidateIssuerSigningKey = true,
-			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("veryverysceret.....")),
-			ValidateAudience = false,
-			ValidateIssuer = false,
-			ClockSkew = TimeSpan.Zero
-		};
-	});
-
-// Configure Data Protection Token Provider
-builder.Services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(3));
-
-// Add DbContext
-builder.Services.AddDbContext<AppDbContext>(options =>
-	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// Add repository
-builder.Services.AddScoped<IRepository, Repository>();
+		ValidateIssuerSigningKey = true,
+		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("veryverysceret.....")),
+		ValidateAudience = false,
+		ValidateIssuer = false,
+		ClockSkew = TimeSpan.Zero
+	};
+});
 
 var app = builder.Build();
 
@@ -89,10 +53,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors();
+app.UseCors("MyPolicy");
+
 app.UseAuthentication();
+
 app.UseAuthorization();
-app.UseStaticFiles();
+
 app.MapControllers();
 
 app.Run();

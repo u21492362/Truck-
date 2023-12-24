@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Reflection.Emit;
-using T_Dalmount.Models;
+using Dalmount.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace T_Dalmount.Context
+namespace Dalmount.Context
 {
 	public class AppDbContext : DbContext
 	{
@@ -11,11 +11,11 @@ namespace T_Dalmount.Context
 		{
 
 		}
-		public DbSet<User> Users { get; set; }
+		public DbSet<UserVM> Users { get; set; }
 		public DbSet<Truck_Miles> Miles { get; set; }
-		protected override void OnModelCreating(ModelBuilder builder)
-		{
-			builder.Entity<User>().ToTable("users");
-		}
+		//protected override void OnModelCreating(ModelBuilder builder)
+		//{
+		//	builder.Entity<User>().ToTable("user");
+		//}
 	}
 }

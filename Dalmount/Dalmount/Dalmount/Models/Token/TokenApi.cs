@@ -1,4 +1,4 @@
-﻿namespace T_Dalmount.Models.Token
+﻿namespace Dalmount.Models.Token
 {
 	public class TokenApi
 	{

@@ -1,14 +1,7 @@
-﻿using T_Dalmount.Context;
-using System.Threading.Tasks;
-using T_Dalmount.Models;
-using T_Dalmount.Controllers;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Identity;
-using System.Net;
-using System.Security.Policy;
+﻿using Dalmount.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace T_Dalmount.Models
+namespace Dalmount.Models
 {
 	public class Repository : IRepository
 	{
@@ -44,9 +37,9 @@ namespace T_Dalmount.Models
 			_appDbContext.Update(entity);
 		}
 		// User
-		public async Task<User[]> ViewProfileAsync()
+		public async Task<UserVM[]> ViewProfileAsync()
 		{
-			IQueryable<User> query = _appDbContext.Users;
+			IQueryable<UserVM> query = _appDbContext.Users;
 			return await query.ToArrayAsync();
 		}
 
