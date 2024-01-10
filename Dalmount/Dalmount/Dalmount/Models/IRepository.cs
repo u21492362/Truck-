@@ -10,5 +10,10 @@
 
 		Task<Truck_Miles[]> GetAllTruck_MilesAsync();
 
+		Task<Gender> GetAllGendersAsync();
+		Task<Salary> GetAllSalariesAsync();
+		Task<EmployeeRole> GetAllEmployeeRolesAsync();
+		Task<Employee> GetAllEmployeesAsync();
+
 	}
 }

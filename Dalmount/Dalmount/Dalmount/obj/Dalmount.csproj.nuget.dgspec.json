@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hp\\OneDrive\\Documents\\GitHub\\Truck-\\Dalmount\\Dalmount\\Dalmount\\Dalmount.csproj": {}
+    "C:\\Users\\fifik\\source\\repos\\u21492362\\Truck-\\Dalmount\\Dalmount\\Dalmount\\Dalmount.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hp\\OneDrive\\Documents\\GitHub\\Truck-\\Dalmount\\Dalmount\\Dalmount\\Dalmount.csproj": {
+    "C:\\Users\\fifik\\source\\repos\\u21492362\\Truck-\\Dalmount\\Dalmount\\Dalmount\\Dalmount.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hp\\OneDrive\\Documents\\GitHub\\Truck-\\Dalmount\\Dalmount\\Dalmount\\Dalmount.csproj",
+        "projectUniqueName": "C:\\Users\\fifik\\source\\repos\\u21492362\\Truck-\\Dalmount\\Dalmount\\Dalmount\\Dalmount.csproj",
         "projectName": "Dalmount",
-        "projectPath": "C:\\Users\\hp\\OneDrive\\Documents\\GitHub\\Truck-\\Dalmount\\Dalmount\\Dalmount\\Dalmount.csproj",
-        "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hp\\OneDrive\\Documents\\GitHub\\Truck-\\Dalmount\\Dalmount\\Dalmount\\obj\\",
+        "projectPath": "C:\\Users\\fifik\\source\\repos\\u21492362\\Truck-\\Dalmount\\Dalmount\\Dalmount\\Dalmount.csproj",
+        "packagesPath": "C:\\Users\\fifik\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\fifik\\source\\repos\\u21492362\\Truck-\\Dalmount\\Dalmount\\Dalmount\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\fifik\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -27,7 +27,7 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
+          "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -88,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
         }
       }
     }

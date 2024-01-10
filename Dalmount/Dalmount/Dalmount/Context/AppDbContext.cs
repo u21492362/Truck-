@@ -17,5 +17,11 @@ namespace Dalmount.Context
 		//{
 		//	builder.Entity<User>().ToTable("user");
 		//}
+
+		public DbSet<Employee> Employees { get; set; }
+		public DbSet<EmployeeRole> EmployeeRoles { get; set; }
+		public DbSet<Gender> Genders { get; set; }
+		public DbSet<Salary> Salaries{ get; set; }
+
 	}
 }

@@ -49,5 +49,52 @@ namespace Dalmount.Models
 			return await query.ToArrayAsync();
 		}
 
-	}
+		// GENDER
+		public async Task<Gender[]> GetAllGendersAsync()
+		{
+			IQueryable<Gender> query = _appDbContext.Genders;
+			return await query.ToArrayAsync();
+		}
+
+		public async Task<Gender> GetGenderByIdAsync(int genderId)
+		{
+			IQueryable<Gender> query = _appDbContext.Genders.Where(g => g.GenderId == genderId);
+			return await query.FirstOrDefaultAsync();
+		}
+
+        // SALARY
+        public async Task<Salary[]> GetAllSalariesAsync()
+        {
+            IQueryable<Salary> query = _appDbContext.Salaries;
+            return await query.ToArrayAsync();
+        }
+
+        // EMPLOYEE ROLE
+        public async Task<EmployeeRole[]> GetAllEmployeeRolesAsync()
+        {
+            IQueryable<EmployeeRole> query = _appDbContext.EmployeeRoles;
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<EmployeeRole> GetEmployeeRoleByIdAsync(int employeeRoleId)
+        {
+            IQueryable<EmployeeRole> query = _appDbContext.EmployeeRoles.Where(g => g.EmployeeRoleId == employeeRoleId);
+            return await query.FirstOrDefaultAsync();
+        }
+
+        // EMPLOYEE
+
+        public async Task<Employee[]> GetAllEmployeeSAsync()
+        {
+            IQueryable<Employee> query = _appDbContext.Employees.Include(e => e.Gender).Include(e => e.EmployeeRole).Include(e => e.Salary);
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<Employee> GetEmployeeIdAsync(int employeeId)
+        {
+            IQueryable<Employee> query = _appDbContext.Employees.Where(e => e.EmployeeId == employeeId);
+            return await query.FirstOrDefaultAsync();
+        }
+
+    }
 }
