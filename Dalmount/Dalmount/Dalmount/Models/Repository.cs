@@ -90,7 +90,7 @@ namespace Dalmount.Models
             return await query.ToArrayAsync();
         }
 
-        public async Task<Employee> GetEmployeeIdAsync(int employeeId)
+        public async Task<Employee> GetEmployeeByIdAsync(int employeeId)
         {
             IQueryable<Employee> query = _appDbContext.Employees.Where(e => e.EmployeeId == employeeId);
             return await query.FirstOrDefaultAsync();

@@ -9,4 +9,3 @@ namespace Dalmount.View_Models
         public int Amount { get; set; }
     }
 }
-}

@@ -10,10 +10,14 @@
 
 		Task<Truck_Miles[]> GetAllTruck_MilesAsync();
 
-		Task<Gender> GetAllGendersAsync();
-		Task<Salary> GetAllSalariesAsync();
-		Task<EmployeeRole> GetAllEmployeeRolesAsync();
-		Task<Employee> GetAllEmployeesAsync();
+		Task<Gender[]> GetAllGendersAsync();
+		Task<Gender> GetGenderByIdAsync(int genderId);
+		Task<Salary[]> GetAllSalariesAsync();
+		Task<Salary> GetSalaryByIdAsync(int salaryId);
+		Task<EmployeeRole[]> GetAllEmployeeRolesAsync();
+        Task<EmployeeRole> GetEmployeeRoleByIdAsync(int employeeRoleId);
+		Task<Employee[]> GetAllEmployeesAsync();
+		Task<Employee> GetEmployeeByIdAsync(int employeeId);
 
 	}
 }

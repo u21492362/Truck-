@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Dalmount.Models;
 using Dalmount.View_Models;
 using Dalmount.Context;
+using System.Threading.Tasks;
 
 namespace Dalmount.Controllers
 {
@@ -37,7 +38,7 @@ namespace Dalmount.Controllers
 
                     e.FirstName,
 
-                    EmployeeRoleName = e.Employee_Role.Name,
+                    EmployeeRoleName = e.EmployeeRole.Name,
 
                     e.PhoneNumber,
 
@@ -63,11 +64,11 @@ namespace Dalmount.Controllers
 
         [HttpGet]
         [Route("GetEmployee/{employeeId}")]
-        public async Task<IActionResult> GetEmployeeAsync(int employeeId)
+        public async Task<IActionResult> GetEmployeeByIdAsync(int employeeId)
         {
             try
             {
-                var result = await _repository.GetEmployeeAsync(employeeId);
+                var result = await _repository.GetEmployeeByIdAsync(employeeId);
 
                 if (result == null) return NotFound("Employee does not exist. You need to create an employee first");
 
@@ -83,32 +84,8 @@ namespace Dalmount.Controllers
 
         [HttpPut]
         [Route("EditEmployee/{employeeId}")]
-        public async Task<ActionResult<EmployeeVM>> EditSupplier(int employeeId, EmployeeVM svm)
-        {
-            try
-            {
-                var currentEmployee = await _repository.GetEmployeeAsync(employeeId);
-                if (currentEmployee == null) return NotFound($"The supplier does not exist");
-
-                currentEmployee.Surname = svm.Surname;
-                currentEmployee.FirstName = svm.FirstName;
-                currentEmployee.Email_Address = svm.Email_Address;
-                currentEmployee.Employee_RoleId = Convert.ToInt32(svm.EmployeeRole);
-                currentEmployee.GenderId = Convert.ToInt32(svm.Gender);
-                currentEmployee.PhoneNumber = svm.PhoneNumber;
-                currentEmployee.Physical_Address = svm.Physical_Address;
-
-                if (await _repository.SaveChangesAsync())
-                {
-                    return Ok(currentEmployee);
-                }
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Internal Server Error. Please contact support.");
-            }
-            return BadRequest("Your request is invalid.");
-        }
+        
+          
 
         // DELETE EMPLOYEE
 
@@ -118,7 +95,7 @@ namespace Dalmount.Controllers
         {
             try
             {
-                var currentEmployee = await _repository.GetEmployeeAsync(employeeId);
+                var currentEmployee = await _repository.GetEmployeeByIdAsync(employeeId);
 
                 if (currentEmployee == null) return NotFound($"The employee does not exist");
 
