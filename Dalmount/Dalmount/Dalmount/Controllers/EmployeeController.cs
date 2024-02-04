@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dalmount.Controllers
 {
-    [Route("api/[Controller")]
+    [Route("api/[Controller]")]
     [ApiController]
     public class EmployeeController : Controller
     {
@@ -82,10 +82,36 @@ namespace Dalmount.Controllers
 
         // UPDATE EMPLOYEE
 
-        [HttpPut]
+        /*[HttpPut]
         [Route("EditEmployee/{employeeId}")]
-        
-          
+        public async Task<ActionResult<EmployeeVM>> UpdateEmployee(int employeeId, EmployeeVM evm)
+        {
+            try
+            {
+                var currentEmployee = await _repository.GetEmployeeByIdAsync(employeeId);
+                if (currentEmployee == null) return NotFound($"The employee does not exist");
+
+                currentEmployee.Surname = evm.Surname;
+                currentEmployee.FirstName = evm.FirstName;
+                currentEmployee.Email_Address = evm.Email_Address;
+                currentEmployee.EmployeeRoleId = Convert.ToInt32(evm.EmployeeRole);
+                currentEmployee.GenderId = Convert.ToInt32(evm.Gender);
+                currentEmployee.PhoneNumber = evm.PhoneNumber;
+                currentEmployee.Physical_Address = evm.Physical_Address;
+                currentEmployee.Salary = evm.Salary;
+
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok(currentEmployee);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "Internal Server Error. Please contact support.");
+            }
+            return BadRequest("Your request is invalid.");
+        }*/
+
 
         // DELETE EMPLOYEE
 

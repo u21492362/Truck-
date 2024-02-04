@@ -69,6 +69,12 @@ namespace Dalmount.Models
             return await query.ToArrayAsync();
         }
 
+        public async Task<Salary> GetSalaryByIdAsync(int salaryId)
+        {
+            IQueryable<Salary> query = _appDbContext.Salaries.Where(s => s.SalaryId == salaryId);
+            return await query.FirstOrDefaultAsync();
+        }
+
         // EMPLOYEE ROLE
         public async Task<EmployeeRole[]> GetAllEmployeeRolesAsync()
         {
@@ -84,7 +90,7 @@ namespace Dalmount.Models
 
         // EMPLOYEE
 
-        public async Task<Employee[]> GetAllEmployeeSAsync()
+        public async Task<Employee[]> GetAllEmployeesAsync()
         {
             IQueryable<Employee> query = _appDbContext.Employees.Include(e => e.Gender).Include(e => e.EmployeeRole).Include(e => e.Salary);
             return await query.ToArrayAsync();
