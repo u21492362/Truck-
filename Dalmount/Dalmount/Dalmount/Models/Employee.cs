@@ -13,9 +13,10 @@ namespace Dalmount.Models
         public string? Physical_Address { get; set; } = string.Empty.ToString();
         public string PhoneNumber { get; set; } = string.Empty.ToString();
         public DateTime Employment_Date { get; set; }
-        public int Salary { get; set; }
+        public int SalaryId { get; set; }
         public int EmployeeRoleId { get; set; }
         public int GenderId { get; set; }
+        public Salary Salary { get; set; }
         public EmployeeRole EmployeeRole { get; set; }
         public Gender Gender { get; set; }
     }

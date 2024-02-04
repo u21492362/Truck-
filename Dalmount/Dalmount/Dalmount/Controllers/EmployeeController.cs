@@ -60,8 +60,41 @@ namespace Dalmount.Controllers
             }
         }
 
-        // GET EMPLOYEE BY ID
+        // CREATE EMPLOYEE
+        [HttpPut]
+        [Route("AddEmployee")]
+        public async Task<ActionResult<EmployeeVM>> AddEmployee(EmployeeVM evm)
+        {
+            var employee = new Employee
 
+            {
+                Surname = evm.Surname,
+                FirstName = evm.FirstName,
+                Email_Address = evm.Email_Address,
+                Physical_Address = evm.Physical_Address,
+                PhoneNumber = evm.PhoneNumber,
+                Employment_Date = evm.Employment_Date,
+                SalaryId = Convert.ToInt32(evm.Salary),
+                EmployeeRoleId = Convert.ToInt32(evm.EmployeeRole),
+                GenderId = Convert.ToInt32(evm.Gender),
+            };
+
+            try
+            {
+                _repository.Add(employee);
+                await _repository.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                // fix error message
+                return BadRequest("Invalid Transaction");
+            }
+
+            return Ok(employee);
+
+        }
+
+        // GET EMPLOYEE BY ID
         [HttpGet]
         [Route("GetEmployee/{employeeId}")]
         public async Task<IActionResult> GetEmployeeByIdAsync(int employeeId)
@@ -82,7 +115,7 @@ namespace Dalmount.Controllers
 
         // UPDATE EMPLOYEE
 
-        /*[HttpPut]
+        [HttpPut]
         [Route("EditEmployee/{employeeId}")]
         public async Task<ActionResult<EmployeeVM>> UpdateEmployee(int employeeId, EmployeeVM evm)
         {
@@ -93,12 +126,13 @@ namespace Dalmount.Controllers
 
                 currentEmployee.Surname = evm.Surname;
                 currentEmployee.FirstName = evm.FirstName;
-                currentEmployee.Email_Address = evm.Email_Address;
+                currentEmployee.Email_Address = evm.Email_Address; 
+                currentEmployee.Physical_Address = evm.Physical_Address;
+                currentEmployee.PhoneNumber = evm.PhoneNumber;
+                currentEmployee.Employment_Date = evm.Employment_Date;
                 currentEmployee.EmployeeRoleId = Convert.ToInt32(evm.EmployeeRole);
                 currentEmployee.GenderId = Convert.ToInt32(evm.Gender);
-                currentEmployee.PhoneNumber = evm.PhoneNumber;
-                currentEmployee.Physical_Address = evm.Physical_Address;
-                currentEmployee.Salary = evm.Salary;
+                currentEmployee.SalaryId = Convert.ToInt32(evm.Salary);
 
                 if (await _repository.SaveChangesAsync())
                 {
@@ -110,7 +144,7 @@ namespace Dalmount.Controllers
                 return StatusCode(500, "Internal Server Error. Please contact support.");
             }
             return BadRequest("Your request is invalid.");
-        }*/
+        }
 
 
         // DELETE EMPLOYEE
